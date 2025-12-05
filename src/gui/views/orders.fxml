@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="gui.controllers.OrderController">
+
+    <!-- Top bar -->
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="10" left="10" right="10" bottom="10"/>
+            </padding>
+            <Button text="← Back" onAction="#backToMain"/>
+            <Label text="Manage Orders">
+                <style>
+                    -fx-font-size: 18px;
+                    -fx-font-weight: bold;
+                </style>
+            </Label>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="15">
+            <padding>
+                <Insets top="20" left="20" right="20" bottom="20"/>
+            </padding>
+
+            <!-- Form -->
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="120"/>
+                    <ColumnConstraints halignment="LEFT" minWidth="200"/>
+                </columnConstraints>
+
+                <children>
+
+                    <Label text="Order ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtId" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Date:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtDate" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Status:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtStatus" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Order Price:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtPrice" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Label text="Customer ID:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtCustomerId" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                </children>
+            </GridPane>
+
+            <!-- Buttons -->
+            <HBox spacing="10">
+                <Button text="Add" onAction="#addOrder"/>
+                <Button text="Find Order" onAction="#findOrder"/>
+                <Button text="Update Status" onAction="#updateOrderStatus"/>
+                <Button text="Delete" onAction="#deleteOrder"/>
+                <Button text="Clear" onAction="#clearForm"/>
+            </HBox>
+
+            <!-- Search Bar -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Search by:"/>
+                <ComboBox fx:id="searchField"/>
+                <TextField fx:id="searchValue" promptText="Enter value..."/>
+            </HBox>
+
+            <!-- Table -->
+            <TableView fx:id="orderTable" prefHeight="250">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="70"/>
+                    <TableColumn fx:id="colDate" text="Date" prefWidth="100"/>
+                    <TableColumn fx:id="colStatus" text="Status" prefWidth="150"/>
+                    <TableColumn fx:id="colPrice" text="Price" prefWidth="100"/>
+                    <TableColumn fx:id="colCustomer" text="Customer ID" prefWidth="100"/>
+                </columns>
+            </TableView>
+
+            <TextArea fx:id="txtMessages" editable="false" prefRowCount="3"/>
+
+        </VBox>
+    </center>
+
+</BorderPane>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="gui.controllers.ShipmentController">
+
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="10" left="10" right="10" bottom="10"/>
+            </padding>
+            <Button text="← Back" onAction="#backToMain"/>
+            <Label text="Manage Shipments">
+                <style>
+                    -fx-font-size: 18px;
+                    -fx-font-weight: bold;
+                </style>
+            </Label>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="15">
+            <padding>
+                <Insets top="20" left="20" right="20" bottom="20"/>
+            </padding>
+
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="140"/>
+                    <ColumnConstraints halignment="LEFT" minWidth="200"/>
+                </columnConstraints>
+
+                <children>
+                    <Label text="Shipment ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtId" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Shipment Date:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtDate" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Tracking Number:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtTrackNum" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Status:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtStatus" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Label text="Order ID:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtOrderId" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                </children>
+

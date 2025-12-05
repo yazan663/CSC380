@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="gui.controllers.ProductController">
+
+    <!-- Top bar -->
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="10" left="10" right="10" bottom="10"/>
+            </padding>
+            <Button text="← Back" onAction="#backToMain"/>
+            <Label text="Manage Products">
+                <style>
+                    -fx-font-size: 18px;
+                    -fx-font-weight: bold;
+                </style>
+            </Label>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="15">
+            <padding>
+                <Insets top="20" left="20" right="20" bottom="20"/>
+            </padding>
+
+            <!-- Form -->
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="100"/>
+                    <ColumnConstraints halignment="LEFT" minWidth="200"/>
+                </columnConstraints>
+
+                <children>
+                    <Label text="Product ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtId" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Name:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtName" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Price:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtPrice" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Stock:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtStock" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                </children>
+            </GridPane>
+
+            <!-- Buttons -->
+            <HBox spacing="10">
+                <Button text="Add" onAction="#addProduct"/>
+                <Button text="Find by Attribute" onAction="#findProduct"/>
+                <Button text="Update Price" onAction="#updateProductPrice"/>
+                <Button text="Delete" onAction="#deleteProduct"/>
+                <Button text="Clear" onAction="#clearForm"/>
+            </HBox>
+
+            <!-- Search Bar -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Search by:"/>
+                <ComboBox fx:id="searchField"/>
+                <TextField fx:id="searchValue" promptText="Enter value..."/>
+            </HBox>
+
+            <!-- Table -->
+            <TableView fx:id="productTable" prefHeight="250">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
+                    <TableColumn fx:id="colName" text="Name" prefWidth="150"/>
+                    <TableColumn fx:id="colPrice" text="Price" prefWidth="100"/>
+                    <TableColumn fx:id="colStock" text="Stock" prefWidth="80"/>
+                </columns>
+            </TableView>
+
+            <TextArea fx:id="txtMessages" editable="false" prefRowCount="3"/>
+
+        </VBox>
+    </center>
+
+</BorderPane>
