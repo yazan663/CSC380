@@ -4,19 +4,15 @@ public class Contains {
 
     private int orderId;
     private int productId;
-    private String numOfProducts;
+    private String quantity;
 
-    // Extra fields loaded from JOIN with Product
-    
-
-    public Contains(int orderId, int productId, String numOfProducts    ) {
-
+    public Contains(int orderId, int productId, String quantity) {
         this.orderId = orderId;
         this.productId = productId;
-        this.numOfProducts = numOfProducts;
-       ;
+        this.quantity = quantity;
     }
 
+    // Getters
     public int getOrderId() {
         return orderId;
     }
@@ -25,45 +21,27 @@ public class Contains {
         return productId;
     }
 
-    public String getNumOfProducts() {
-        return numOfProducts;
+    public String getQuantity() {
+        return quantity;
     }
 
-    public int getQuantityInt() {
-        try {
-            return Integer.parseInt(numOfProducts);
-        } catch (Exception e) {
-            return 0;
-        }
+    // Setters (if needed)
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
-    public String getProductName() {
-        return productName;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    public String getProductPrice() {
-        return productPrice;
-    }
-
-    // Subtotal = price * quantity
-    public String getSubtotal() {
-        try {
-            int price = Integer.parseInt(productPrice);
-            int qty = Integer.parseInt(numOfProducts);
-            return String.valueOf(price * qty);
-        } catch (Exception e) {
-            return "0";
-        }
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 
     @Override
     public String toString() {
-        return "Contains{" +
-                "orderId=" + orderId +
+        return "Contains: orderId=" + orderId +
                 ", productId=" + productId +
-                ", numOfProducts='" + numOfProducts + '\'' +
-                ", productName='" + productName + '\'' +
-                ", productPrice='" + productPrice + '\'' +
-                '}';
+                ", quantity=" + quantity;
     }
 }

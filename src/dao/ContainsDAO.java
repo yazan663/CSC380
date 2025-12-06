@@ -21,7 +21,8 @@ public class ContainsDAO {
 
             ps.setInt(1, c.getOrderId());
             ps.setInt(2, c.getProductId());
-            ps.setString(3, c.getNumOfProducts());
+            ps.setString(3, c.getQuantity());
+
 
             int rows = ps.executeUpdate();
             return rows == 1;
@@ -71,4 +72,30 @@ public class ContainsDAO {
             return false;
         }
     }
+    public List<Contains> getProductsInOrder(int orderId) {
+        List<Contains> list = new ArrayList<>();
+        String sql = "SELECT * FROM Contains WHERE Order_Order_ID = ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Contains c = new Contains(
+                        rs.getInt("Order_Order_ID"),
+                        rs.getInt("Product_Product_ID"),
+                        rs.getString("Num_Of_Products")
+                );
+                list.add(c);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
 }

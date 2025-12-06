@@ -1,12 +1,16 @@
 package gui.controllers;
 
 import dao.CustomerDAO;
+import dao.OrderDAO;
+
 import gui.App;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import models.Customer;
+import models.Order;
 
+import java.util.List;
 public class CustomerController {
 
     @FXML private TextField txtId;
@@ -25,7 +29,7 @@ public class CustomerController {
     @FXML private TextArea txtMessages;
 
     private final CustomerDAO dao = new CustomerDAO();
-
+    private final OrderDAO orderDao = new OrderDAO();
     @FXML
     private void initialize() {
         colId.setCellValueFactory(c -> new javafx.beans.property.SimpleIntegerProperty(c.getValue().getCustomerId()).asObject());
@@ -42,21 +46,36 @@ public class CustomerController {
 
     @FXML
     private void addCustomer() {
-        Integer id = parseInt(txtId.getText(), "ID");
-        if (id == null) return;
 
-        Customer c = new Customer(id,
-                txtName.getText(),
-                txtEmail.getText(),
-                txtPhone.getText(),
-                txtAddress.getText());
+        String name    = txtName.getText().trim();
+        String email   = txtEmail.getText().trim();
+        String phone   = txtPhone.getText().trim();
+        String address = txtAddress.getText().trim();
+
+        if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty()) {
+            show("Please fill all fields (except ID).");
+            return;
+        }
+
+        // ID = 0 مبدئي، والـ DAO هو اللي يحط الـ ID الصحيح
+        Customer c = new Customer(0, name, email, phone, address);
 
         boolean ok = dao.insertCustomer(c);
         if (ok) {
-            customerTable.setItems(FXCollections.observableArrayList(c));
-            show("Customer added!");
-        } else show("Error adding customer.");
+            // نحط الـ ID الحقيقي اللي جا من الـ DB
+            txtId.setText(String.valueOf(c.getCustomerId()));
+
+            // نحدّث الجدول بكل العملاء
+            customerTable.setItems(
+                    FXCollections.observableArrayList(dao.getAllCustomers())
+            );
+
+            show("Customer added with ID: " + c.getCustomerId());
+        } else {
+            show("Error adding customer.");
+        }
     }
+
 
     @FXML
     private void findCustomer() {
@@ -106,6 +125,41 @@ public class CustomerController {
             customerTable.setItems(FXCollections.observableArrayList());
         } else show("Error deleting customer.");
     }
+    
+    @FXML
+    private void showAllCustomers() {
+        customerTable.setItems(
+                FXCollections.observableArrayList(dao.getAllCustomers())
+        );
+        show("All customers loaded.");
+    }
+    
+    @FXML
+    private void showCustomerOrders() {
+        Integer id = parseInt(txtId.getText(), "Customer ID");
+        if (id == null) return;
+
+        List<Order> orders = orderDao.searchByCustomerId(id);
+
+        if (orders == null || orders.isEmpty()) {
+            show("No orders for customer " + id);
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Orders for customer ").append(id).append(":\n");
+
+        for (Order o : orders) {
+            sb.append("Order ID: ").append(o.getOrderId())
+              .append(" | Date: ").append(o.getOrderDate())
+              .append(" | Status: ").append(o.getStatus())
+              .append(" | Price: ").append(o.getOrderPrice())
+              .append("\n");
+        }
+
+        txtMessages.setText(sb.toString());
+    }
+
 
     @FXML
     private void clearForm() {

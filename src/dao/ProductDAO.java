@@ -109,24 +109,30 @@ public class ProductDAO {
 
 
 		
-    public boolean insertProduct(Product p) {
-        String sql = "INSERT INTO Product (Product_ID, Name, Price, Stock) VALUES (?, ?, ?, ?)";
-        try {
-            Connection con = DBConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);
+	// 1) إضافة منتج
+	public boolean insertProduct(Product p) {
 
-            ps.setInt(1, p.getProductId());
-            ps.setString(2, p.getName());
-            ps.setString(3, p.getPrice());
-            ps.setInt(4, p.getStock());
+	    String sql = "INSERT INTO Product (Product_ID, Name, Price, Stock) " +
+	                 "VALUES (?, ?, ?, ?)";
 
-            int rows = ps.executeUpdate();
-            return rows == 1;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+	    try {
+	        Connection con = DBConnection.getConnection();
+	        PreparedStatement ps = con.prepareStatement(sql);
+
+	        ps.setInt(1, p.getProductId());
+	        ps.setString(2, p.getName());
+	        ps.setString(3, p.getPrice());
+	        ps.setInt(4, p.getStock());
+
+	        int rows = ps.executeUpdate();
+	        return rows == 1;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
 
     public Product getProductById(int id) {
         String sql = "SELECT * FROM Product WHERE Product_ID = ?";
@@ -168,8 +174,10 @@ public class ProductDAO {
         }
     }
 
+ // 2) حذف منتج بالـ ID
     public boolean deleteProduct(int id) {
         String sql = "DELETE FROM Product WHERE Product_ID = ?";
+
         try {
             Connection con = DBConnection.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
@@ -178,9 +186,39 @@ public class ProductDAO {
 
             int rows = ps.executeUpdate();
             return rows == 1;
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
+    
+ // 3) إرجاع كل المنتجات لعرضها في الجدول
+    public List<Product> getAllProducts() {
+        List<Product> list = new ArrayList<>();
+
+        String sql = "SELECT * FROM Product ORDER BY Product_ID";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Product p = new Product(
+                        rs.getInt("Product_ID"),
+                        rs.getString("Name"),
+                        rs.getString("Price"),
+                        rs.getInt("Stock")
+                );
+                list.add(p);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+
 }

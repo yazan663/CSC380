@@ -53,13 +53,12 @@
             </GridPane>
 
             <!-- Buttons -->
-            <HBox spacing="10">
-                <Button text="Add" onAction="#addProduct"/>
-                <Button text="Find by Attribute" onAction="#findProduct"/>
-                <Button text="Update Price" onAction="#updateProductPrice"/>
-                <Button text="Delete" onAction="#deleteProduct"/>
-                <Button text="Clear" onAction="#clearForm"/>
-            </HBox>
+           <HBox spacing="10">
+    <Button text="Add"        onAction="#addProduct"/>
+    <Button text="Delete"     onAction="#deleteProduct"/>
+    <Button text="Show All"   onAction="#showAllProducts"/>
+</HBox>
+
 
             <!-- Search Bar -->
             <HBox spacing="10" alignment="CENTER_LEFT">

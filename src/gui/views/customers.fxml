@@ -54,14 +54,17 @@
                 </children>
             </GridPane>
 
-            <!-- Buttons -->
+                       <!-- Buttons -->
             <HBox spacing="10">
-                <Button text="Add"          onAction="#addCustomer"/>
-                <Button text="Find by ID"   onAction="#findCustomer"/>
-                <Button text="Update Email" onAction="#updateCustomerEmail"/>
-                <Button text="Delete"       onAction="#deleteCustomer"/>
-                <Button text="Clear"        onAction="#clearForm"/>
+                <Button text="Add"            onAction="#addCustomer"/>
+                <Button text="Find by ID"     onAction="#findCustomer"/>
+                <Button text="Update Email"   onAction="#updateCustomerEmail"/>
+                <Button text="Delete"         onAction="#deleteCustomer"/>
+                <Button text="Show All"       onAction="#showAllCustomers"/>
+                <Button text="Show Orders"    onAction="#showCustomerOrders"/>
+                <Button text="Clear"          onAction="#clearForm"/>
             </HBox>
+
 
             <!-- Table -->
             <TableView fx:id="customerTable" prefHeight="250">

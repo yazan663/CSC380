@@ -64,6 +64,10 @@
                 <Button text="Update Status" onAction="#updateOrderStatus"/>
                 <Button text="Delete" onAction="#deleteOrder"/>
                 <Button text="Clear" onAction="#clearForm"/>
+                <Button text="Show All" onAction="#showAllOrders"/>
+                <Button text="Show Products" onAction="#showOrderProducts"/>
+
+
             </HBox>
 
             <!-- Search Bar -->

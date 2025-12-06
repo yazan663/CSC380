@@ -52,21 +52,32 @@ public class ProductController {
     @FXML
     private void addProduct() {
         Integer id = parseInt(txtId.getText(), "Product ID");
-        Integer stock = parseInt(txtStock.getText(), "Stock");
-        if (id == null || stock == null) return;
+        if (id == null) return;
 
-        String name = txtName.getText();
-        String price = txtPrice.getText();
+        String name  = txtName.getText().trim();
+        String price = txtPrice.getText().trim();
+        String stockText = txtStock.getText().trim();
+
+        if (name.isEmpty() || price.isEmpty() || stockText.isEmpty()) {
+            show("Please fill ID, Name, Price and Stock.");
+            return;
+        }
+
+        Integer stock = parseInt(stockText, "Stock");
+        if (stock == null) return;
 
         Product p = new Product(id, name, price, stock);
 
         if (dao.insertProduct(p)) {
-            show("Product added!");
-            productTable.setItems(FXCollections.observableArrayList(p));
+            show("Product added.");
+            productTable.setItems(
+                    FXCollections.observableArrayList(dao.getAllProducts())
+            );
         } else {
-            show("Error adding product (ID may already exist)");
+            show("Error adding product.");
         }
     }
+
 
     @FXML
     private void findProduct() {
@@ -135,12 +146,20 @@ public class ProductController {
 
         if (dao.deleteProduct(id)) {
             show("Product deleted.");
-            clearForm();
-            productTable.setItems(FXCollections.observableArrayList());
+            productTable.setItems(
+                    FXCollections.observableArrayList(dao.getAllProducts())
+            );
         } else {
-            show("Could not delete product.");
+            show("Error deleting product.");
         }
     }
+    @FXML
+    private void showAllProducts() {
+        List<Product> list = dao.getAllProducts();
+        productTable.setItems(FXCollections.observableArrayList(list));
+        show("Loaded all products.");
+    }
+
 
     @FXML
     private void clearForm() {
